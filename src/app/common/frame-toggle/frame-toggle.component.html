@@ -1,0 +1,36 @@
+<div class="flex justify-center w-full">
+    <div class="flex space-x-4 p-4">
+        <!-- Job/Internship Button -->
+        <button (click)="setActive('addTask')" [class.bg-blue-600]="isActive('addTask')"
+            [class.text-white]="isActive('addTask')"
+            class="toggle-button flex items-center justify-center w-36 h-12 p-2 rounded-full transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white gap-1.5 text-sm md:text-base">
+            💼 Add Tasks
+        </button>
+
+        <!-- Training Button -->
+        <button (click)="setActive('viewTask')" [class.bg-blue-600]="isActive('viewTask')"
+            [class.text-white]="isActive('viewTask')"
+            class="toggle-button flex items-center justify-center w-36 h-12 p-2 rounded-full transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white gap-1.5 text-sm md:text-base">
+            📖 View Tasks
+        </button>
+    </div>
+</div>
+
+<div class="justify-center w-full">
+  <common-info-bar/>
+</div>
+
+<div class="justify-center w-full">
+  @if(isActive('addTask')){
+    <special-task-form/>
+  }@else{
+    @for( task of tasks; track task){
+      <!--here i want to reder only one card per row on small screen , 2 card on 1 row in medium, and 3 on large in one row-->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="p-4">
+          <special-view-data [task]="task"></special-view-data>
+        </div>
+      </div>
+    }
+  }
+</div>
