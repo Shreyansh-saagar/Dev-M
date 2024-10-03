@@ -28,4 +28,17 @@ export class FrameToggleComponent implements OnInit {
   isActive(buttonName: string): boolean {
     return this.activeButton === buttonName;
   }
+
+  handleDeleteTask(task: any) {
+    this.tasks = this.tasks.filter((t) => t.id !== task.id);
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+  }
+
+  handleMarkAsComplete(task: any) {
+    const index = this.tasks.findIndex((t) => t.id === task.id);
+    if (index !== -1) {
+      this.tasks[index].completed = true;
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    }
+  }
 }

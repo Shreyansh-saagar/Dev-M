@@ -1,28 +1,74 @@
-<div class="bg-white shadow-lg rounded-lg p-6 max-w-sm w-full">
-  <!-- Task Title -->
-  <h3 class="text-lg font-bold mb-2 text-gray-800">{{ task.taskName }}</h3>
+<div class="bg-white shadow-lg rounded-lg overflow-hidden max-w-sm w-full transform transition duration-300 hover:scale-105 {{cardOpacity}}">
 
-  <!-- Task Description -->
-  <p class="text-gray-600 mb-4">{{ task.taskDescription }}</p>
-
-  <!-- Task Dates -->
-  <div class="text-sm text-gray-500 mb-2">
-    <strong>Start:</strong> {{ task.startDate | date:'medium' }}
-  </div>
-  <div class="text-sm text-gray-500 mb-4">
-    <strong>End:</strong> {{ task.endDate | date:'medium' }}
+  <!-- Task Header-->
+  <div class="flex justify-between items-center bg-gradient-to-r from-blue-500 to-indigo-500 p-2 md:p-3">
+    <h3 class="text-base md:text-xl font-semibold text-white">{{task.taskName}}</h3>
   </div>
 
-  <!-- Task Priority -->
-  <span
-    class="inline-block px-3 py-1 rounded-full text-sm font-medium"
-    [class.bg-red-200]="task.priority === 'critical'"
-    [class.text-red-800]="task.priority === 'critical'"
-    [class.bg-yellow-200]="task.priority === 'normal'"
-    [class.text-yellow-800]="task.priority === 'normal'"
-    [class.bg-green-200]="task.priority === 'not-so-urgent'"
-    [class.text-green-800]="task.priority === 'not-so-urgent'"
-  >
-    Priority: {{ task.priority | titlecase }}
-  </span>
+  <!-- Task Body -->
+  <div class="p-2 md:px-4 md:py-2 space-y-2">
+    <!-- Task Priority -->
+    <div>
+      <span
+        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ priorityClasses }}"
+      >
+        {{ task.priority | titlecase }}
+      </span>
+    </div>
+
+    <hr>
+
+    <!-- Task Time-Line -->
+    <div class="flex justify-between text-sm text-gray-500">
+      <div>
+        <span class="font-semibold">Start:</span> {{ task.startDate | date: 'mediumDate' }}
+      </div>
+      <div>
+        <span class="font-semibold">End:</span> {{ task.endDate | date: 'mediumDate' }}
+      </div>
+    </div>
+    <hr>
+
+    <!-- Task Description -->
+    <p class="text-slate-800 text-sm whitespace-pre-wrap">{{task.taskDescription}}</p>
+
+    <hr>
+
+    <!--Action Buttons-->
+    <div class="flex justify-center space-x-2">
+      <button (click)="onDelete()" class="flex items-center bg-red-500 hover:bg-red-600 text-white font-medium py-1.5 px-3 rounded-full transition duration-200">
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <!-- SVG path for delete icon -->
+          <path
+            fill-rule="evenodd"
+            d="M6 8a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z"
+            clip-rule="evenodd"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M4 5a1 1 0 011-1h10a1 1 0 011 1v1H4V5zM5 8h10v8a2 2 0 01-2 2H7a2 2 0 01-2-2V8z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        Delete
+      </button>
+
+      <button
+        class="flex items-center bg-green-500 hover:bg-green-600 text-white font-medium py-1.5 px-3 rounded-full transition duration-200"
+        (click)="onMarkAsComplete()"
+        [disabled]="task.completed"
+      >
+        <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <!-- SVG path for check icon -->
+          <path
+            fill-rule="evenodd"
+            d="M16.707 5.293a1 1 0 010 1.414L9 14.414l-3.707-3.707a1 1 0 00-1.414 1.414l4.414 4.414a1 1 0 001.414 0l8.414-8.414a1 1 0 00-1.414-1.414L9 12.586 6.414 10a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0L16.707 5.293z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        {{ task.completed ? 'Completed' : 'Complete' }}
+      </button>
+    </div>
+
+  </div>
 </div>
